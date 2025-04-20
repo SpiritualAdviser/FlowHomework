@@ -14,9 +14,9 @@ class CatsRepository(
         while (true) {
             try {
                 val latestNews = catsService.getCatFact()
-                emit(latestNews)
-            } catch (_: Throwable) {
-
+                emit(Result.Success(latestNews))
+            } catch (e: Throwable) {
+                e.message?.let { emit(Result.Error(it)) }
             }
             delay(refreshIntervalMs)
         }
