@@ -34,7 +34,14 @@ class SampleInteractor(
      * Если число не делится на 3,5,15 - эмитим само число
      */
     fun task2(): Flow<String> {
-        return flowOf()
+        return sampleRepository.produceNumbers().transform {
+            emit(it.toString())
+            when {
+                it % 15 == 0 -> emit("FizzBuzz")
+                it % 3 == 0 -> emit("Fizz")
+                it % 5 == 0 -> emit("Buzz")
+            }
+        }
     }
 
     /**
